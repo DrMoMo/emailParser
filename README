@@ -1,0 +1,41 @@
+Hello!
+
+emailParser.py is designed to help with quick triage of an email mailbox that users frequently send
+suspicious emails to.  
+
+There are a couple requirements:
+1) Python
+2) Internet
+3) Email Inbox with IMAP access (right now it's set to SSL only)
+4) CouchDB server (I haven't put in auth creds yet)
+5) a free virustotal.com api key
+
+So, what the script does is this:
+1) logs into email box
+2) parsers all the messages in that mailbox
+3) deletes the emails WITHOUT attachments
+5) parses the emails WTIH attachments
+6) gets the folling info:
+	Date
+	Sender
+	Subject
+	Filename
+	MD5
+	File Size (haven't done this yet)
+
+7) using the MD5 it then checks it against virustotal.com, if it's not there, then it submits the
+file and receives the send_id
+8) If it has been seen it gets the results
+9) It checks the md5 against the couchdb to see if anyone in the past has sent in the same file then
+it grabs that history
+10) finally it emails all this data to an email address you choose
+
+INSTALL:
+install python and couchdb
+add you details to the emailparser.conf file
+run configureCouchDB.py #this will setup the database and the required view
+stick the emailparser.py script in a cron job to run every 5 minutes
+
+P.S. this is my first contribution to open source, help if you can.
+Thanks
+MoMo
